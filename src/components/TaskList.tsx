@@ -27,7 +27,7 @@ export function TaskList() {
         Se eu tirasse a parte do (prevState) ele iria sempre sobrescrever.
       */
       setTasks((prevState) => [...prevState, newTask]);
-
+      setNewTaskTitle('');
     }    
   }
 
