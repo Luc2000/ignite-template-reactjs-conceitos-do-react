@@ -15,15 +15,38 @@ export function TaskList() {
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
   function handleCreateNewTask() {
-    // Crie uma nova task com um id random, não permita criar caso o título seja vazio.
+    if(newTaskTitle){
+      const newTask = {
+        id: Math.ceil(Math.random() * 100),
+        title: newTaskTitle,
+        isComplete: false
+      };
+
+      /*
+        Ou seja, o set do use state pode ser usado, com um parâmetro, que é a função de quemele é antes, dai tu abre uma função para dar um update
+        Se eu tirasse a parte do (prevState) ele iria sempre sobrescrever.
+      */
+      setTasks((prevState) => [...prevState, newTask]);
+
+    }    
   }
 
   function handleToggleTaskCompletion(id: number) {
-    // Altere entre `true` ou `false` o campo `isComplete` de uma task com dado ID
+    const indexTask = tasks.findIndex((tasks) => tasks.id === id);
+
+    const tempTasks = [...tasks];
+    
+    tempTasks[indexTask].isComplete = !tempTasks[indexTask].isComplete;
+    setTasks(tempTasks);
   }
 
   function handleRemoveTask(id: number) {
-    // Remova uma task da listagem pelo ID
+    const indexTask = tasks.findIndex((tasks) => tasks.id === id);
+    const tempTasks = [...tasks];
+
+    tempTasks.splice(indexTask,1);
+    
+    setTasks(tempTasks);
   }
 
   return (
